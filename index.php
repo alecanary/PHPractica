@@ -5,11 +5,13 @@ function listaEjemplos()
 
 
     while ($fichero = readdir( $dir )) {
-        if ($fichero != "." && $fichero != "..") {
+        if (substr( $fichero, -3 ) == 'php') {
             $ejemplos[] = substr( $fichero, 0, -4 );
         }
+
     }
     closedir( $dir );
+
     return $ejemplos;
 }
 
@@ -88,7 +90,7 @@ function listaEjemplosMathew()
             foreach (listaEjemplos() as $ficheroEjemplo) { ?>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger"
-                       href="?section=<?= $ficheroEjemplo . ".php" ?>"> <?= $ficheroEjemplo ?></a>
+                       href="?section=<?= $ficheroEjemplo ?>"> <?= $ficheroEjemplo ?></a>
 
                 </li>
                 <?php
@@ -124,7 +126,7 @@ function listaEjemplosMathew()
     // me muestra los sections
 
     if (isset( $_GET['section'] ) && !empty( $_GET['section'] )) {
-        include("sections/" . $_GET['section']);
+        include("sections/" . $_GET['section'] . '.php');
     }
 
 
