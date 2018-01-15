@@ -1,3 +1,39 @@
+<?php
+function listaEjemplos()
+{
+    $dir = opendir( "./sections" );
+
+
+    while ($fichero = readdir( $dir )) {
+        if ($fichero != "." && $fichero != "..") {
+            $ejemplos[] = substr( $fichero, 0, -4 );
+        }
+    }
+    closedir( $dir );
+    return $ejemplos;
+}
+
+function listaEjemplosMathew()
+{
+    $dir = "./sections";
+    if (is_dir( $dir )) {
+        if ($dirOpen = opendir( $dir )) {
+            $i = 1;
+            while (($file = readdir( $dirOpen )) !== false) {
+                if ($file != "." && $file != "..") {
+                    $name = substr( $file, 0, -4 );
+                    echo "<li class=\"nav-item\"><a class=\"nav-link js-scroll-trigger\" href=\"?section=$i\">$name</a></li>" . "<br>";
+                    $i++;
+                }
+            }
+        }
+        closedir( $dirOpen );
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,10 +78,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="?section=prueba">Prueba</a>
-            </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="?section=prueba">Prueba</a>
+             </li>-->
+            <?php
+            // listaEjemplosMathew();
+            ?>
+            <?php
+            foreach (listaEjemplos() as $ficheroEjemplo) { ?>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger"
+                       href="?section=<?= $ficheroEjemplo . ".php" ?>"> <?= $ficheroEjemplo ?></a>
+
+                </li>
+                <?php
+            }
+            ?>
+
+            <!--<li class=" nav-item">
                 <a class="nav-link js-scroll-trigger" href="?section=about">About</a>
             </li>
             <li class="nav-item">
@@ -63,14 +113,18 @@
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="?section=awards">Awards</a>
             </li>
+            -->
         </ul>
     </div>
 </nav>
 
 <div class="container-fluid p-0">
+
     <?php
+    // me muestra los sections
+
     if (isset( $_GET['section'] ) && !empty( $_GET['section'] )) {
-        include "sections/" . $_GET['section'] . ".php";
+        include("sections/" . $_GET['section']);
     }
 
 
