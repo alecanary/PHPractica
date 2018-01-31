@@ -35,13 +35,16 @@ function leerOrdenadoC1($rutaFichero)
         $c1 = explode( "#", $registro )[0];
         $c1_ant = $c1;
         while (!feof( $fich_desc ) && $c1 == $c1_ant) {
+            echo $registro . "</br>";
+//            $c1_valor= (int)explode( "#", $registro )[1];
+//            echo $c1_valor."</br>";
             //$c1 = explode( "#", $registro )[0];
             $c1_subtotal += (int)explode( "#", $registro )[1];
             $registro = fgets( $fich_desc );//leer siguiente
-            $c1 = explode( "#", $registro )[0];
+            $c1 = explode( "#", $registro )[0]; //es necesario hacer esto despues del fgets para que la comparacion sea valida.
+
         }
         $c1_total += $c1_subtotal;
-
         echo "El total de " . $c1_ant . " es " . $c1_subtotal . "</br>";
         $c1_subtotal = 0;
     }
